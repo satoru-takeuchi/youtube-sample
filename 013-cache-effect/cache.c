@@ -6,7 +6,7 @@
 #include <err.h>
 
 #define CACHE_LINE_SIZE	64
-#define NLOOP		(4*1024UL*1024*1024)
+#define TOTAL_BYTES	(4*1024UL*1024*1024)
 #define NSECS_PER_SEC	1000000000UL
 
 static inline long diff_nsec(struct timespec before, struct timespec after)
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 	clock_gettime(CLOCK_MONOTONIC, &before);
 
 	int i;
-	for (i = 0; i < NLOOP / (size / CACHE_LINE_SIZE); i++) {
+	for (i = 0; i < TOTAL_BYTES / (size / CACHE_LINE_SIZE); i++) {
 		long j;
 		for (j = 0; j < size; j += CACHE_LINE_SIZE)
 			buffer[j] = 0;
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 
         clock_gettime(CLOCK_MONOTONIC, &after);
 
-	printf("%f\n", (double)diff_nsec(before, after) / NLOOP);
+	printf("%f\n", (double)diff_nsec(before, after)/NSECS_PER_SEC);
 	
 	if (munmap(buffer, size) == -1)
 		err(EXIT_FAILURE, "munmap() failed");
