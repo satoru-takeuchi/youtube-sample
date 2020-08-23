@@ -87,10 +87,9 @@ int main(int argc, char *argv[])
 	if (!logbuf)
 		err(EXIT_FAILURE, "malloc(logbuf) failed");
 
-	puts("estimating workload which takes one millisecond");
+	fputs("estimating workload which takes one millisecond", stderr);
         unsigned long nloop_per_resol = loops_per_msec() * resol;
-	puts("end estimation");
-	fflush(stdout);
+	fputs("end estimation", stderr);
 
         pids = malloc(nproc * sizeof(pid_t));
         if (pids == NULL) {
