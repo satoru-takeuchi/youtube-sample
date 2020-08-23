@@ -51,7 +51,7 @@ static void child_fn(int id, struct timespec *buf, int nrecord, unsigned long nl
                 buf[i] = ts;
         }
         for (i = 0; i < nrecord; i++)
-	        printf("%d\t%f.3\n", id, diff_nsec(start, buf[i])/(double)NSECS_PER_MSEC);
+	        printf("%d\t%f\n", id, diff_nsec(start, buf[i])/(double)NSECS_PER_MSEC);
         exit(EXIT_SUCCESS);
 }
  
