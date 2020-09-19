@@ -8,4 +8,4 @@ done
 touch lock
 TMP=$(cat count)
 echo $((TMP + 1)) >count
-rm lock
+rm -f lock
