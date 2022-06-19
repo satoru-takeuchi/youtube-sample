@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <err.h>
+#include <sys/resource.h>
+
  
 #define NLOOP_FOR_ESTIMATION 1000000000UL
 #define NSECS_PER_MSEC 1000000UL
@@ -69,11 +71,12 @@ int main(int argc, char *argv[])
         int ret = EXIT_FAILURE;
 
         if (argc < 2) {
-                fprintf(stderr, "usage: %s <nproc>\n", argv[0]);
+                fprintf(stderr, "usage: %s <p1_nice>\n", argv[0]);
                 exit(EXIT_FAILURE);
         }
 
-        int nproc = atoi(argv[1]);
+	int p1_nice = atoi(argv[1]);
+	int nproc = 2;
         int total = 100;
         int resol = 1;
 
@@ -107,6 +110,12 @@ int main(int argc, char *argv[])
                         goto wait_children;
                 } else if (pids[i] == 0) {
                         // children
+
+			// tweak nice value if p1's nice value is not 0
+                        if (i == 1 && p1_nice != 0) {
+				if (setpriority(PRIO_PROCESS, 0, p1_nice) == -1)
+					err(EXIT_FAILURE, "setpriority() failed");
+			}
 
                         child_fn(i, logbuf, nrecord, nloop_per_resol, start);
                         /* shouldn't reach here */
