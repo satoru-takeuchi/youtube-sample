@@ -1,0 +1,1 @@
+0 2097152 linear /dev/loop0 0
