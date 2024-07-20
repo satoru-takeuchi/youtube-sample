@@ -17,7 +17,7 @@ $ sudo insmod stop-machine.ko
 $ 
 ```
 
-Then entire system stop five second.
+Then entire system stop 10 seconds.
 
 After that, you can uninstall this module like this.
 
