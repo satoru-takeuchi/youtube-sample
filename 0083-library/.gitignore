@@ -1,0 +1,6 @@
+main-static
+libtest.so
+main-dynamic
+libtest.a
+libtest.o
+main.o
